@@ -1,0 +1,308 @@
+/* ==========================
+   Inventory Page
+========================== */
+
+.inventory-container {
+    min-height: 80vh;
+    background: #f4f7fc;
+    padding: 40px;
+}
+
+.inventory-card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    padding: 30px;
+}
+
+/* ==========================
+   Header
+========================== */
+
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.inventory-header h2 {
+    color: #0d4d92;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* ==========================
+   Add Button
+========================== */
+
+.add-btn {
+    background: #198754;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.add-btn:hover {
+    background: #157347;
+    transform: translateY(-2px);
+}
+
+/* ==========================
+   Table
+========================== */
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.inventory-table thead {
+    background: #0d6efd;
+    color: white;
+}
+
+.inventory-table th {
+    padding: 15px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.inventory-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 15px;
+}
+
+.inventory-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+/* ==========================
+   Edit Button
+========================== */
+
+.edit-btn {
+    background: #ffc107;
+    color: #222;
+    border: none;
+    padding: 8px 14px;
+    margin-right: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.edit-btn:hover {
+    background: #ffca2c;
+}
+
+/* ==========================
+   Delete Button
+========================== */
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.delete-btn:hover {
+    background: #bb2d3b;
+}
+
+/* ==========================
+   Empty Table
+========================== */
+
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 18px;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media screen and (max-width:1000px){
+
+    .inventory-container{
+        padding:20px;
+    }
+
+    .inventory-card{
+        overflow-x:auto;
+    }
+
+    .inventory-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .inventory-table{
+        min-width:900px;
+    }
+
+}
+
+/* ==========================
+   Scrollbar
+========================== */
+
+.inventory-card::-webkit-scrollbar{
+    height:8px;
+}
+
+.inventory-card::-webkit-scrollbar-thumb{
+    background:#b8b8b8;
+    border-radius:20px;
+}
+
+/* ==========================
+   Buttons Alignment
+========================== */
+
+.inventory-table td button{
+    margin:3px;
+}
+
+/* ==========================
+   Card Animation
+========================== */
+
+.inventory-card{
+    animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+/* Modal */
+
+.modal-overlay{
+
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+
+background:rgba(0,0,0,.5);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+z-index:1000;
+
+}
+
+.modal-box{
+
+background:white;
+
+width:500px;
+
+padding:30px;
+
+border-radius:15px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+
+animation:fadeIn .3s ease;
+
+}
+
+.modal-box h2{
+
+margin-bottom:20px;
+color:#0d4d92;
+
+}
+
+.modal-box form{
+
+display:flex;
+flex-direction:column;
+
+}
+
+.modal-box input{
+
+margin-bottom:15px;
+
+padding:12px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+font-size:15px;
+
+}
+
+.modal-buttons{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:10px;
+
+}
+
+.modal-buttons button{
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.modal-buttons button:first-child{
+
+background:#198754;
+color:white;
+
+}
+
+.cancel-btn{
+
+background:#dc3545 !important;
+color:white;
+
+}

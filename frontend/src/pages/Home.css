@@ -1,0 +1,55 @@
+.hero{
+    height:calc(100vh - 140px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#e3f2fd,#f1f8e9);
+}
+
+.hero-content{
+    width:700px;
+    text-align:center;
+}
+
+.hero-content h1{
+    font-size:48px;
+    color:#0f4c81;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:20px;
+    color:#555;
+    line-height:1.8;
+    margin-bottom:40px;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+.login-btn,
+.register-btn{
+    padding:14px 35px;
+    font-size:18px;
+    border-radius:8px;
+    color:white;
+}
+
+.login-btn{
+    background:#1976d2;
+}
+
+.register-btn{
+    background:#2e7d32;
+}
+
+.login-btn:hover{
+    background:#1565c0;
+}
+
+.register-btn:hover{
+    background:#1b5e20;
+}
