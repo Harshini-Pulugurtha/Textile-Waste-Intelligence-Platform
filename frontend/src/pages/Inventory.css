@@ -840,3 +840,46 @@ padding:25px;
 }
 
 }
+/* ==========================
+   Success Message
+========================== */
+
+.success-message{
+
+    background:#d1fae5;
+
+    color:#065f46;
+
+    border:1px solid #10b981;
+
+    padding:15px 20px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    font-weight:600;
+
+    animation:fadeIn .3s ease;
+
+}
+
+.error-message{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+
+    border:1px solid #ef4444;
+
+    padding:15px 20px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    font-weight:600;
+
+    animation:fadeIn .3s ease;
+
+}

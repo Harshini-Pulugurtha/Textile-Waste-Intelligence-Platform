@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from datetime import date
 
 from app.database import get_db
 from app.models import TextileInventory, User
@@ -34,6 +35,14 @@ def create_inventory(
     )
 ):
 
+    # Prevent future collection date
+    if inventory.collection_date > date.today():
+        raise HTTPException(
+            status_code=400,
+            detail="Future collection dates are not allowed."
+        )
+
+    # Prevent duplicate Batch ID
     existing = (
         db.query(TextileInventory)
         .filter(
@@ -110,6 +119,7 @@ def get_inventory_by_id(
 
     return inventory
 
+
 # ===================================================
 # Update Inventory
 # Admin, Manufacturer & Recycling Operator
@@ -143,6 +153,30 @@ def update_inventory(
             detail="Inventory not found"
         )
 
+    # Prevent duplicate Batch ID (excluding current record)
+    existing = (
+        db.query(TextileInventory)
+        .filter(
+            TextileInventory.waste_batch_id ==
+            inventory.waste_batch_id,
+            TextileInventory.id != inventory_id
+        )
+        .first()
+    )
+
+    if existing:
+        raise HTTPException(
+            status_code=400,
+            detail="Waste Batch ID already exists."
+        )
+
+    # Prevent future collection date
+    if inventory.collection_date > date.today():
+        raise HTTPException(
+            status_code=400,
+            detail="Future collection dates are not allowed."
+        )
+
     db_inventory.waste_batch_id = inventory.waste_batch_id
     db_inventory.fabric_type = inventory.fabric_type
     db_inventory.source = inventory.source
@@ -155,6 +189,7 @@ def update_inventory(
     db.refresh(db_inventory)
 
     return db_inventory
+
 
 # ===================================================
 # Delete Inventory

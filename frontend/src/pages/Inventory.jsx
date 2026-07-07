@@ -38,6 +38,8 @@ function Inventory() {
 
     const [editingId, setEditingId] = useState(null);
 
+    const [message, setMessage] = useState("");
+
     const [formData, setFormData] = useState({
 
         waste_batch_id: "",
@@ -76,7 +78,13 @@ function Inventory() {
 
             console.log(error);
 
-            alert("Failed to load inventory.");
+            setMessage("❌ Failed to load inventory.");
+
+            setTimeout(() => {
+
+                setMessage("");
+
+            }, 3000);
 
         }
 
@@ -98,6 +106,48 @@ function Inventory() {
 
         e.preventDefault();
 
+        // ==========================
+        // Frontend Validations
+        // ==========================
+
+        const today = new Date();
+
+        today.setHours(0, 0, 0, 0);
+
+        const selectedDate = new Date(formData.collection_date);
+
+        if (selectedDate > today) {
+
+            setMessage("❌ Future collection dates are not allowed.");
+
+            setTimeout(() => {
+
+                setMessage("");
+
+            }, 3000);
+
+            return;
+
+            return;
+
+        }
+
+        if (Number(formData.quantity) <= 0) {
+
+            setMessage("❌ Quantity must be greater than 0.");
+
+            setTimeout(() => {
+
+                setMessage("");
+
+            }, 3000);
+
+            return;
+
+            return;
+
+        }
+
         try {
 
             if (editingId) {
@@ -107,7 +157,13 @@ function Inventory() {
                     formData
                 );
 
-                alert("Inventory Updated Successfully");
+                setMessage("✅ Inventory updated successfully.");
+
+                setTimeout(() => {
+
+                    setMessage("");
+
+                }, 3000);
 
             }
 
@@ -115,7 +171,13 @@ function Inventory() {
 
                 await createInventory(formData);
 
-                alert("Inventory Added Successfully");
+                setMessage("✅ Inventory added successfully.");
+
+                setTimeout(() => {
+
+                    setMessage("");
+
+                }, 3000);
 
             }
 
@@ -149,13 +211,25 @@ function Inventory() {
 
             if (error.response) {
 
-                alert(error.response.data.detail);
+                setMessage(`❌ ${error.response.data.detail}`);
+
+                setTimeout(() => {
+
+                    setMessage("");
+
+                }, 3000);
 
             }
 
             else {
 
-                alert("Operation Failed");
+                setMessage("❌ Operation failed.");
+
+                setTimeout(() => {
+
+                    setMessage("");
+
+                }, 3000);
 
             }
 
@@ -197,7 +271,13 @@ function Inventory() {
 
             await deleteInventory(id);
 
-            alert("Inventory Deleted Successfully");
+            setMessage("✅ Inventory deleted successfully.");
+
+            setTimeout(() => {
+
+                setMessage("");
+
+            }, 3000);
 
             loadInventories();
 
@@ -205,7 +285,13 @@ function Inventory() {
 
         catch (error) {
 
-            alert("Delete Failed");
+            setMessage("❌ Delete failed.");
+
+            setTimeout(() => {
+
+                setMessage("");
+
+            }, 3000);
 
         }
 
@@ -309,6 +395,24 @@ function Inventory() {
 
                                         setEditingId(null);
 
+                                        setFormData({
+
+                                            waste_batch_id: "",
+
+                                            fabric_type: "",
+
+                                            source: "",
+
+                                            quantity: "",
+
+                                            color: "",
+
+                                            condition: "",
+
+                                            collection_date: ""
+
+                                        });
+
                                         setShowModal(true);
 
                                     }}
@@ -396,8 +500,24 @@ function Inventory() {
                             />
 
                         </div>
+                        
 
                     </div>
+                    {message && (
+
+                        <div
+                            className={
+                                message.startsWith("❌")
+                                    ? "error-message"
+                                    : "success-message"
+                            }
+                        >
+
+                            {message}
+
+                        </div>
+
+                    )}
 
                     <table className="inventory-table">
 
@@ -464,7 +584,7 @@ function Inventory() {
                                 <td>
 
                                     <span
-                                        className={`status-badge ${item.condition?.toLowerCase()}`}
+                                        className={`status-badge ${(item.condition || "pending").toLowerCase()}`}
                                     >
                                         {item.condition || "N/A"}
                                     </span>
