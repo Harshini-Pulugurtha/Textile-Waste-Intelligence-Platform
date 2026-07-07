@@ -13,3 +13,5 @@ node_modules/
 datasets/
 # Logs
 *.log
+
+venv/

@@ -1,369 +1,317 @@
-/* ==========================================
-   Dashboard Background
-========================================== */
+/* ==================================================
+   DASHBOARD
+================================================== */
 
-.dashboard-container {
-
-    max-width: 1200px;
-
-    margin: auto;
-
-    padding: 40px 20px;
-
-    background: #f4f7fc;
-
+.dashboard-container{
+    max-width:1400px;
+    margin:auto;
+    padding:40px 25px;
+    background:#f5f8fc;
+    min-height:100vh;
 }
 
-/* ==========================================
-   Welcome Banner
-========================================== */
+/* ==================================================
+   HERO
+================================================== */
 
-.dashboard-card {
-
-    background: linear-gradient(135deg, #1565c0, #42a5f5);
-
-    color: white;
-
-    padding: 35px;
-
-    border-radius: 18px;
-
-    margin-bottom: 30px;
-
-    box-shadow: 0 12px 25px rgba(0,0,0,.15);
-
+.dashboard-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:linear-gradient(135deg,#1565C0,#42A5F5);
+    color:white;
+    padding:35px 40px;
+    border-radius:20px;
+    margin-bottom:35px;
+    box-shadow:0 12px 25px rgba(0,0,0,.12);
 }
 
-.dashboard-card h1 {
-
-    font-size: 34px;
-
-    margin-bottom: 10px;
-
+.dashboard-card h1{
+    font-size:36px;
+    margin-bottom:10px;
 }
 
-.dashboard-card p {
-
-    font-size: 17px;
-
-    opacity: .95;
-
+.dashboard-card p{
+    opacity:.95;
+    margin-bottom:18px;
+    font-size:17px;
 }
 
-/* ==========================================
-   Statistics Cards
-========================================== */
-
-.stats-grid {
-
-    display: grid;
-
-    grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
-
-    gap: 25px;
-
-    margin-bottom: 30px;
-
+.role-chip{
+    display:inline-block;
+    background:rgba(255,255,255,.2);
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:15px;
+    font-weight:600;
 }
 
-.stat-card {
-
-    background: white;
-
-    border-radius: 15px;
-
-    padding: 25px;
-
-    text-align: center;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,.12);
-
-    transition: .3s;
-
+.date-box{
+    background:white;
+    color:#1565C0;
+    padding:18px 25px;
+    border-radius:15px;
+    font-weight:bold;
+    box-shadow:0 8px 18px rgba(0,0,0,.15);
 }
 
-.stat-card:hover {
+/* ==================================================
+   KPI CARDS
+================================================== */
 
-    transform: translateY(-6px);
-
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    margin-bottom:35px;
 }
 
-.stat-card h3 {
-
-    color: #666;
-
-    font-size: 18px;
-
-    margin-bottom: 15px;
-
+.stat-card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
 }
 
-.stat-card h2 {
-
-    color: #1976d2;
-
-    font-size: 34px;
-
-    margin: 0;
-
+.stat-card:hover{
+    transform:translateY(-8px);
 }
 
-/* ==========================================
-   User Information
-========================================== */
-
-.profile-card {
-
-    background: white;
-
-    border-radius: 15px;
-
-    padding: 30px;
-
-    margin-bottom: 30px;
-
-    box-shadow: 0 10px 20px rgba(0,0,0,.12);
-
+.stat-icon{
+    font-size:40px;
+    margin-bottom:18px;
 }
 
-.profile-card h2 {
-
-    color: #0d4d92;
-
-    margin-bottom: 25px;
-
+.stat-card h3{
+    color:#666;
+    margin-bottom:15px;
 }
 
-.profile-grid {
-
-    display: grid;
-
-    grid-template-columns: repeat(2,1fr);
-
-    gap: 20px;
-
+.stat-card h2{
+    font-size:34px;
+    margin:0;
 }
 
-.profile-item {
-
-    background: #f8f9fc;
-
-    border-left: 5px solid #1976d2;
-
-    border-radius: 10px;
-
-    padding: 18px;
-
+.inventory{
+    border-top:6px solid #1565C0;
 }
 
-.profile-item label {
-
-    display: block;
-
-    color: #666;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    margin-bottom: 8px;
-
+.inventory .stat-icon{
+    color:#1565C0;
 }
 
-.profile-item p {
-
-    margin: 0;
-
-    color: #222;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
+.quantity{
+    border-top:6px solid #2E7D32;
 }
 
-/* ==========================================
-   Recent Inventory
-========================================== */
-
-.recent-card {
-
-    background: white;
-
-    border-radius: 15px;
-
-    padding: 30px;
-
-    margin-bottom: 30px;
-
-    box-shadow: 0 10px 20px rgba(0,0,0,.12);
-
+.quantity .stat-icon{
+    color:#2E7D32;
 }
 
-.recent-card h2 {
-
-    color: #0d4d92;
-
-    margin-bottom: 20px;
-
+.fabric{
+    border-top:6px solid #FF9800;
 }
 
-.recent-card table {
-
-    width: 100%;
-
-    border-collapse: collapse;
-
+.fabric .stat-icon{
+    color:#FF9800;
 }
 
-.recent-card thead {
-
-    background: #1976d2;
-
-    color: white;
-
+.today{
+    border-top:6px solid #8E24AA;
 }
 
-.recent-card th {
-
-    padding: 15px;
-
-    text-align: center;
-
+.today .stat-icon{
+    color:#8E24AA;
 }
 
-.recent-card td {
+/* ==================================================
+   PROFILE
+================================================== */
 
-    padding: 15px;
-
-    text-align: center;
-
-    border-bottom: 1px solid #e5e5e5;
-
+.profile-card{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    margin-bottom:35px;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
 }
 
-.recent-card tbody tr:hover {
-
-    background: #f5f9ff;
-
+.profile-card h2{
+    color:#1565C0;
+    margin-bottom:25px;
 }
 
-/* ==========================================
-   Buttons
-========================================== */
-
-.button-group {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 20px;
-
-    flex-wrap: wrap;
-
-    margin-bottom: 40px;
-
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
 }
 
-.button-group button {
-
-    min-width: 220px;
-
-    padding: 14px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    color: white;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: .3s;
-
+.profile-item{
+    background:#f7fbff;
+    border-left:5px solid #1565C0;
+    border-radius:10px;
+    padding:18px;
 }
 
-.profile-btn {
-
-    background: #1976d2;
-
+.profile-item label{
+    display:block;
+    color:#777;
+    font-size:14px;
+    margin-bottom:8px;
 }
 
-.profile-btn:hover {
-
-    background: #1565c0;
-
-    transform: translateY(-3px);
-
+.profile-item p{
+    font-size:18px;
+    font-weight:700;
+    margin:0;
 }
 
-.inventory-btn {
+/* ==================================================
+   RECENT INVENTORY
+================================================== */
 
-    background: #198754;
-
+.recent-card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    margin-bottom:35px;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
 }
 
-.inventory-btn:hover {
-
-    background: #157347;
-
-    transform: translateY(-3px);
-
+.recent-card h2{
+    color:#1565C0;
+    margin-bottom:20px;
 }
 
-.logout-btn {
-
-    background: #dc3545;
-
+.recent-card table{
+    width:100%;
+    border-collapse:collapse;
 }
 
-.logout-btn:hover {
-
-    background: #bb2d3b;
-
-    transform: translateY(-3px);
-
+.recent-card thead{
+    background:#1565C0;
+    color:white;
 }
 
-/* ==========================================
-   Mobile
-========================================== */
+.recent-card th{
+    padding:15px;
+}
+
+.recent-card td{
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+.recent-card tbody tr:hover{
+    background:#eef7ff;
+}
+
+/* ==================================================
+   BUTTON GROUP
+================================================== */
+
+.button-group{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:35px;
+    margin-bottom:35px;
+}
+
+.profile-btn,
+.inventory-btn,
+.logout-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-width:220px;
+    padding:15px 30px;
+    border:none;
+    border-radius:12px;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.profile-btn{
+    background:#1565C0;
+}
+
+.profile-btn:hover{
+    background:#0D47A1;
+    transform:translateY(-3px);
+}
+
+.inventory-btn{
+    background:#2E7D32;
+}
+
+.inventory-btn:hover{
+    background:#1B5E20;
+    transform:translateY(-3px);
+}
+
+.logout-btn{
+    background:#E53935;
+}
+
+.logout-btn:hover{
+    background:#C62828;
+    transform:translateY(-3px);
+}
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media(max-width:992px){
+
+.dashboard-card{
+    flex-direction:column;
+    text-align:center;
+    gap:20px;
+}
+
+.profile-grid{
+    grid-template-columns:1fr;
+}
+
+}
 
 @media(max-width:768px){
 
-    .dashboard-card h1{
+.stats-grid{
+    grid-template-columns:1fr;
+}
 
-        font-size:28px;
+.dashboard-container{
+    padding:20px;
+}
 
-    }
+.dashboard-card h1{
+    font-size:28px;
+}
 
-    .profile-grid{
+.button-group{
+    flex-direction:column;
+}
 
-        grid-template-columns:1fr;
+.profile-btn,
+.inventory-btn,
+.logout-btn{
+    width:100%;
+}
 
-    }
-
-    .button-group{
-
-        flex-direction:column;
-
-    }
-
-    .button-group button{
-
-        width:100%;
-
-    }
-
-    .recent-card{
-
-        overflow-x:auto;
-
-    }
+.recent-card{
+    overflow-x:auto;
+}
 
 }

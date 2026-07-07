@@ -2,6 +2,13 @@ import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 
+import {
+    FaRecycle,
+    FaShieldAlt,
+    FaLeaf,
+    FaBoxes
+} from "react-icons/fa";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import API from "../services/api";
@@ -18,17 +25,19 @@ function Login() {
         password: ""
     });
 
-    // Handle Input Change
     const handleChange = (e) => {
+
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
+
     };
 
     // ===============================
-    // Email & Password Login
+    // Email Login
     // ===============================
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -55,9 +64,13 @@ function Login() {
         } catch (error) {
 
             if (error.response) {
+
                 alert(error.response.data.detail);
+
             } else {
+
                 alert("Login Failed");
+
             }
 
         }
@@ -67,6 +80,7 @@ function Login() {
     // ===============================
     // Google Login
     // ===============================
+
     const handleGoogleSuccess = async (credentialResponse) => {
 
         try {
@@ -78,25 +92,24 @@ function Login() {
                 }
             );
 
-            // ------------------------------
-            // First Time Google User
-            // ------------------------------
             if (response.data.new_user) {
 
                 navigate("/complete-profile", {
+
                     state: {
+
                         token: credentialResponse.credential,
                         full_name: response.data.full_name,
                         email: response.data.email
+
                     }
+
                 });
 
                 return;
+
             }
 
-            // ------------------------------
-            // Existing Google User
-            // ------------------------------
             localStorage.setItem(
                 "token",
                 response.data.access_token
@@ -111,12 +124,14 @@ function Login() {
 
         } catch (error) {
 
-            console.error(error);
-
             if (error.response) {
+
                 alert(error.response.data.detail);
+
             } else {
+
                 alert("Google Login Failed");
+
             }
 
         }
@@ -126,82 +141,192 @@ function Login() {
     return (
 
         <>
+
             <Navbar />
 
-            <div className="login-container">
+            <div className="login-page">
 
-                <form
-                    className="login-form"
-                    onSubmit={handleSubmit}
-                >
+                {/* LEFT PANEL */}
 
-                    <h2>Login</h2>
+                <div className="login-left">
 
-                    {location.state?.message && (
-                        <div className="success-message">
-                            {location.state.message}
-                        </div>
-                    )}
+                    <div className="brand-card">
 
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
+                        <h1>
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
+                            Textile Waste
+                            <br />
+                            Intelligence Platform
 
-                    <button type="submit">
-                        Login
-                    </button>
+                        </h1>
 
-                    <div
-                        style={{
-                            marginTop: "20px",
-                            marginBottom: "20px",
-                            textAlign: "center"
-                        }}
-                    >
+                        <p>
 
-                        <p
-                            style={{
-                                marginBottom: "10px"
-                            }}
-                        >
-                            OR
+                            Smart management of textile waste through
+                            inventory tracking, secure authentication,
+                            analytics, and sustainability-driven workflows.
+
                         </p>
 
-                        <GoogleLogin
-                            onSuccess={handleGoogleSuccess}
-                            onError={() => {
-                                alert("Google Login Failed");
-                            }}
-                        />
+                        <div className="feature-list">
+
+                            <div className="feature-item">
+
+                                <FaBoxes />
+
+                                <span>
+                                    Inventory Management
+                                </span>
+
+                            </div>
+
+                            <div className="feature-item">
+
+                                <FaRecycle />
+
+                                <span>
+                                    Sustainable Waste Tracking
+                                </span>
+
+                            </div>
+
+                            <div className="feature-item">
+
+                                <FaShieldAlt />
+
+                                <span>
+                                    JWT & Google OAuth Authentication
+                                </span>
+
+                            </div>
+
+                            <div className="feature-item">
+
+                                <FaLeaf />
+
+                                <span>
+                                    AI Ready Platform
+                                </span>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <p>
-                        Don't have an account?{" "}
-                        <Link to="/register">
-                            Register
-                        </Link>
-                    </p>
+                </div>
 
-                </form>
+                {/* RIGHT PANEL */}
+
+                <div className="login-right">
+
+                    <div className="login-form-card">
+
+                        <h2>Welcome Back</h2>
+
+                        <p className="subtitle">
+
+                            Sign in to continue
+
+                        </p>
+
+                        {location.state?.message && (
+
+                            <div className="success-message">
+
+                                {location.state.message}
+
+                            </div>
+
+                        )}
+
+                        <form onSubmit={handleSubmit}>
+
+                            <input
+
+                                type="email"
+
+                                name="email"
+
+                                placeholder="Email Address"
+
+                                value={formData.email}
+
+                                onChange={handleChange}
+
+                                required
+
+                            />
+
+                            <input
+
+                                type="password"
+
+                                name="password"
+
+                                placeholder="Password"
+
+                                value={formData.password}
+
+                                onChange={handleChange}
+
+                                required
+
+                            />
+
+                            <button
+                                type="submit"
+                                className="login-btn"
+                            >
+
+                                Login
+
+                            </button>
+
+                        </form>
+
+                        <div className="divider">
+
+                            <span>OR</span>
+
+                        </div>
+
+                        <div className="google-section">
+
+                            <GoogleLogin
+
+                                onSuccess={handleGoogleSuccess}
+
+                                onError={() => {
+
+                                    alert("Google Login Failed");
+
+                                }}
+
+                            />
+
+                        </div>
+
+                        <p className="register-text">
+
+                            Don't have an account?
+
+                            <Link to="/register">
+
+                                Register
+
+                            </Link>
+
+                        </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
             <Footer />
+
         </>
 
     );

@@ -1,4 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import {
+    FaBoxes,
+    FaPlus,
+    FaArrowLeft,
+    FaSearch,
+    FaEdit,
+    FaTrash,
+    FaLayerGroup,
+    FaWeightHanging
+} from "react-icons/fa";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -13,26 +26,40 @@ import "./Inventory.css";
 
 function Inventory() {
 
+    const navigate = useNavigate();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const [inventories, setInventories] = useState([]);
+
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [showModal, setShowModal] = useState(false);
 
     const [editingId, setEditingId] = useState(null);
 
     const [formData, setFormData] = useState({
+
         waste_batch_id: "",
+
         fabric_type: "",
+
         source: "",
+
         quantity: "",
+
         color: "",
+
         condition: "",
+
         collection_date: ""
+
     });
 
-    const user = JSON.parse(localStorage.getItem("user"));
-
     useEffect(() => {
+
         loadInventories();
+
     }, []);
 
     const loadInventories = async () => {
@@ -43,7 +70,9 @@ function Inventory() {
 
             setInventories(response.data);
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.log(error);
 
@@ -56,93 +85,113 @@ function Inventory() {
     const handleChange = (e) => {
 
         setFormData({
+
             ...formData,
+
             [e.target.name]: e.target.value
+
         });
 
     };
 
     const handleSaveInventory = async (e) => {
 
-    e.preventDefault();
+        e.preventDefault();
 
-    try {
+        try {
 
-        if (editingId) {
+            if (editingId) {
 
-            await updateInventory(
-                editingId,
-                formData
-            );
+                await updateInventory(
+                    editingId,
+                    formData
+                );
 
-            alert("Inventory Updated Successfully");
+                alert("Inventory Updated Successfully");
 
-        } else {
+            }
 
-            await createInventory(formData);
+            else {
 
-            alert("Inventory Added Successfully");
+                await createInventory(formData);
+
+                alert("Inventory Added Successfully");
+
+            }
+
+            setEditingId(null);
+
+            setShowModal(false);
+
+            setFormData({
+
+                waste_batch_id: "",
+
+                fabric_type: "",
+
+                source: "",
+
+                quantity: "",
+
+                color: "",
+
+                condition: "",
+
+                collection_date: ""
+
+            });
+
+            loadInventories();
 
         }
 
-        setShowModal(false);
+        catch (error) {
 
-        setEditingId(null);
+            if (error.response) {
 
-        setFormData({
-            waste_batch_id: "",
-            fabric_type: "",
-            source: "",
-            quantity: "",
-            color: "",
-            condition: "",
-            collection_date: ""
-        });
+                alert(error.response.data.detail);
 
-        loadInventories();
+            }
 
-    } catch (error) {
+            else {
 
-        if (error.response) {
+                alert("Operation Failed");
 
-            alert(error.response.data.detail);
-
-        } else {
-
-            alert("Operation Failed");
+            }
 
         }
 
-    }
+    };
 
-};
     const handleEdit = (inventory) => {
 
-    setEditingId(inventory.id);
+        setEditingId(inventory.id);
 
-    setFormData({
+        setFormData({
 
-        waste_batch_id: inventory.waste_batch_id,
-        fabric_type: inventory.fabric_type,
-        source: inventory.source,
-        quantity: inventory.quantity,
-        color: inventory.color,
-        condition: inventory.condition,
-        collection_date: inventory.collection_date
+            waste_batch_id: inventory.waste_batch_id,
 
-    });
+            fabric_type: inventory.fabric_type,
 
-    setShowModal(true);
+            source: inventory.source,
 
-};
+            quantity: inventory.quantity,
+
+            color: inventory.color,
+
+            condition: inventory.condition,
+
+            collection_date: inventory.collection_date
+
+        });
+
+        setShowModal(true);
+
+    };
 
     const handleDelete = async (id) => {
 
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete this inventory?"
-        );
-
-        if (!confirmDelete) return;
+        if (!window.confirm("Delete this inventory?")) return;
 
         try {
 
@@ -152,25 +201,62 @@ function Inventory() {
 
             loadInventories();
 
-        } catch (error) {
+        }
 
-            if (error.response) {
+        catch (error) {
 
-                alert(error.response.data.detail);
-
-            } else {
-
-                alert("Delete Failed");
-
-            }
+            alert("Delete Failed");
 
         }
 
     };
 
+    const filteredInventories = useMemo(() => {
+
+        return inventories.filter((item) =>
+
+            item.waste_batch_id
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+
+            ||
+
+            item.fabric_type
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+
+        );
+
+    }, [inventories, searchTerm]);
+
+    const totalQuantity = inventories.reduce(
+
+        (sum, item) =>
+
+            sum + Number(item.quantity),
+
+        0
+
+    );
+
+    const totalFabricTypes = [
+
+        ...new Set(
+
+            inventories.map(
+
+                item => item.fabric_type
+
+            )
+
+        )
+
+    ].length;
+
     return (
 
         <>
+
             <Navbar />
 
             <div className="inventory-container">
@@ -179,19 +265,137 @@ function Inventory() {
 
                     <div className="inventory-header">
 
-                        <h2>Textile Inventory Management</h2>
+                        <div>
 
-                        {(user.role === "Administrator" ||
-                            user.role === "manufacturer") && (
+                            <h2>
+
+                                Textile Inventory Management
+
+                            </h2>
+
+                            <p>
+
+                                Manage and monitor textile waste inventory efficiently.
+
+                            </p>
+
+                        </div>
+
+                        <div className="header-buttons">
+
+                            <button
+
+                                className="dashboard-btn"
+
+                                onClick={() => navigate("/dashboard")}
+
+                            >
+
+                                <FaArrowLeft />
+
+                                Dashboard
+
+                            </button>
+
+                            {(user.role === "Administrator" ||
+
+                                user.role === "manufacturer") && (
 
                                 <button
+
                                     className="add-btn"
-                                    onClick={() => setShowModal(true)}
+
+                                    onClick={() => {
+
+                                        setEditingId(null);
+
+                                        setShowModal(true);
+
+                                    }}
+
                                 >
-                                    + Add Inventory
+
+                                    <FaPlus />
+
+                                    Add Inventory
+
                                 </button>
 
                             )}
+
+                        </div>
+
+                    </div>
+
+                    <div className="inventory-stats">
+
+                        <div className="inventory-stat-card">
+
+                            <FaBoxes className="stat-icon"/>
+
+                            <h3>Total Batches</h3>
+
+                            <h2>
+
+                                {inventories.length}
+
+                            </h2>
+
+                        </div>
+
+                        <div className="inventory-stat-card">
+
+                            <FaWeightHanging className="stat-icon"/>
+
+                            <h3>Total Quantity</h3>
+
+                            <h2>
+
+                                {totalQuantity} kg
+
+                            </h2>
+
+                        </div>
+
+                        <div className="inventory-stat-card">
+
+                            <FaLayerGroup className="stat-icon"/>
+
+                            <h3>Fabric Types</h3>
+
+                            <h2>
+
+                                {totalFabricTypes}
+
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <div className="inventory-tools">
+
+                        <div className="search-box">
+
+                            <FaSearch />
+
+                            <input
+
+                                type="text"
+
+                                placeholder="Search Batch ID or Fabric..."
+
+                                value={searchTerm}
+
+                                onChange={(e) =>
+
+                                    setSearchTerm(e.target.value)
+
+                                }
+
+                            />
+
+                        </div>
 
                     </div>
 
@@ -202,12 +406,19 @@ function Inventory() {
                             <tr>
 
                                 <th>Batch ID</th>
+
                                 <th>Fabric</th>
+
                                 <th>Source</th>
+
                                 <th>Quantity</th>
+
                                 <th>Color</th>
+
                                 <th>Condition</th>
-                                <th>Collection Date</th>
+
+                                <th>Date</th>
+
                                 <th>Actions</th>
 
                             </tr>
@@ -216,22 +427,27 @@ function Inventory() {
 
                         <tbody>
 
-                            {inventories.length === 0 ? (
+                            {filteredInventories.length === 0 ? (
 
                                 <tr>
 
                                     <td
+
                                         colSpan="8"
+
                                         className="no-data"
+
                                     >
+
                                         No Inventory Found
+
                                     </td>
 
                                 </tr>
 
                             ) : (
 
-                                inventories.map((item) => (
+                                filteredInventories.map((item) => (
 
                                     <tr key={item.id}>
 
@@ -241,57 +457,75 @@ function Inventory() {
 
                                         <td>{item.source}</td>
 
-                                        <td>{item.quantity}</td>
+                                        <td>{item.quantity} kg</td>
 
                                         <td>{item.color}</td>
 
-                                        <td>{item.condition}</td>
+                                <td>
 
-                                        <td>{item.collection_date}</td>
+                                    <span
+                                        className={`status-badge ${item.condition?.toLowerCase()}`}
+                                    >
+                                        {item.condition || "N/A"}
+                                    </span>
 
-                                        <td>
+                                </td>
 
-                                            {(user.role === "Administrator" ||
-                                                user.role === "manufacturer" ||
-                                                user.role === "recycling_operator") && (
+                                <td>{item.collection_date}</td>
 
-                                                    <button
-                                                        className="edit-btn"
-                                                        onClick={() => handleEdit(item)}
-                                                    >
-                                                        Edit
-                                                    </button>
+                                <td>
 
-                                                )}
+                                    {(user.role === "Administrator" ||
 
-                                            {user.role === "Administrator" && (
+                                        user.role === "manufacturer" ||
 
-                                                <button
-                                                    className="delete-btn"
-                                                    onClick={() => handleDelete(item.id)}
-                                                >
-                                                    Delete
-                                                </button>
+                                        user.role === "recycling_operator") && (
 
-                                            )}
+                                        <button
+                                            className="edit-btn"
+                                            onClick={() => handleEdit(item)}
+                                        >
 
-                                        </td>
+                                            <FaEdit />
 
-                                    </tr>
+                                            Edit
+
+                                        </button>
+
+                                    )}
+
+                                    {user.role === "Administrator" && (
+
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() => handleDelete(item.id)}
+                                        >
+
+                                            <FaTrash />
+
+                                            Delete
+
+                                        </button>
+
+                                    )}
+
+                                </td>
+
+                                </tr>
 
                                 ))
 
-                            )}
+                                )}
 
-                        </tbody>
+                                </tbody>
 
-                    </table>
+                                </table>
 
-                </div>
+                                </div>
 
-            </div>
+                                </div>
 
-            {showModal && (
+                                            {showModal && (
 
                 <div className="modal-overlay">
 
@@ -307,82 +541,113 @@ function Inventory() {
 
                         <form onSubmit={handleSaveInventory}>
 
-                            <input
-                                type="text"
-                                name="waste_batch_id"
-                                placeholder="Waste Batch ID"
-                                value={formData.waste_batch_id}
-                                onChange={handleChange}
-                                required
-                            />
+                            <div className="form-grid">
 
-                            <input
-                                type="text"
-                                name="fabric_type"
-                                placeholder="Fabric Type"
-                                value={formData.fabric_type}
-                                onChange={handleChange}
-                                required
-                            />
+                                <input
+                                    type="text"
+                                    name="waste_batch_id"
+                                    placeholder="Waste Batch ID"
+                                    value={formData.waste_batch_id}
+                                    onChange={handleChange}
+                                    required
+                                />
 
-                            <input
-                                type="text"
-                                name="source"
-                                placeholder="Source"
-                                value={formData.source}
-                                onChange={handleChange}
-                                required
-                            />
+                                <input
+                                    type="text"
+                                    name="fabric_type"
+                                    placeholder="Fabric Type"
+                                    value={formData.fabric_type}
+                                    onChange={handleChange}
+                                    required
+                                />
 
-                            <input
-                                type="number"
-                                name="quantity"
-                                placeholder="Quantity"
-                                value={formData.quantity}
-                                onChange={handleChange}
-                                required
-                            />
+                                <input
+                                    type="text"
+                                    name="source"
+                                    placeholder="Source"
+                                    value={formData.source}
+                                    onChange={handleChange}
+                                    required
+                                />
 
-                            <input
-                                type="text"
-                                name="color"
-                                placeholder="Color"
-                                value={formData.color}
-                                onChange={handleChange}
-                            />
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    placeholder="Quantity (kg)"
+                                    value={formData.quantity}
+                                    onChange={handleChange}
+                                    required
+                                />
 
-                            <input
-                                type="text"
-                                name="condition"
-                                placeholder="Condition"
-                                value={formData.condition}
-                                onChange={handleChange}
-                            />
+                                <input
+                                    type="text"
+                                    name="color"
+                                    placeholder="Color"
+                                    value={formData.color}
+                                    onChange={handleChange}
+                                />
 
-                            <input
-                                type="date"
-                                name="collection_date"
-                                value={formData.collection_date}
-                                onChange={handleChange}
-                                required
-                            />
+                                <select
+                                    name="condition"
+                                    value={formData.condition}
+                                    onChange={handleChange}
+                                >
+
+                                    <option value="">
+                                        Select Condition
+                                    </option>
+
+                                    <option value="Good">
+                                        Good
+                                    </option>
+
+                                    <option value="Recyclable">
+                                        Recyclable
+                                    </option>
+
+                                    <option value="Damaged">
+                                        Damaged
+                                    </option>
+
+                                </select>
+
+                                <input
+                                    type="date"
+                                    name="collection_date"
+                                    value={formData.collection_date}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
 
                             <div className="modal-buttons">
 
-                                <button type="submit">
+                                <button
+                                    type="submit"
+                                    className="save-btn"
+                                >
 
-                                        {editingId
-                                            ? "Update"
-                                            : "Save"}
+                                    {editingId
+                                        ? "Update Inventory"
+                                        : "Save Inventory"}
 
-                                    </button>
+                                </button>
 
                                 <button
                                     type="button"
                                     className="cancel-btn"
-                                    onClick={() => setShowModal(false)}
+                                    onClick={() => {
+
+                                        setShowModal(false);
+
+                                        setEditingId(null);
+
+                                    }}
                                 >
+
                                     Cancel
+
                                 </button>
 
                             </div>
