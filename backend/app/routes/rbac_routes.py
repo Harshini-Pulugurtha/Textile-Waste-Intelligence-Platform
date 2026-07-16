@@ -23,7 +23,7 @@ def get_me(current_user: User = Depends(get_current_user)):
 @router.get("/admin")
 def admin_dashboard(
     current_user: User = Depends(
-        RoleChecker(["Administrator"])
+        RoleChecker(["admin"])
     )
 ):
     return {

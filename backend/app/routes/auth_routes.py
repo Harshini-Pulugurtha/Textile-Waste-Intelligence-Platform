@@ -12,19 +12,24 @@ from google.auth.transport import requests
 
 
 
+
 from app.database import get_db
 from app.models import User
 from app.schemas import (
     UserRegister,
     UserLogin,
     GoogleLogin,
-    GoogleRegister
+    GoogleRegister,
+    ForgotPasswordRequest,
+    ResetPasswordRequest
 )
 from app.auth import (
     hash_password,
     verify_password,
     create_access_token
 )
+
+
 
 router = APIRouter()
 
@@ -288,3 +293,64 @@ def google_register(
             status_code=500,
             detail=f"Google Registration Failed: {str(e)}"
         )
+
+# ==================================================
+# Forgot Password
+# ==================================================
+
+@router.post("/forgot-password")
+def forgot_password(
+    request: ForgotPasswordRequest,
+    db: Session = Depends(get_db)
+):
+
+    user = (
+        db.query(User)
+        .filter(User.email == request.email)
+        .first()
+    )
+
+    if user is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Email not registered."
+        )
+
+    return {
+        "message": "Email verified successfully."
+    }
+
+
+# ==================================================
+# Reset Password
+# ==================================================
+
+@router.post("/reset-password")
+def reset_password(
+    request: ResetPasswordRequest,
+    db: Session = Depends(get_db)
+):
+
+    user = (
+        db.query(User)
+        .filter(User.email == request.email)
+        .first()
+    )
+
+    if user is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail="User not found."
+        )
+
+    user.password = hash_password(
+        request.new_password
+    )
+
+    db.commit()
+
+    return {
+        "message": "Password updated successfully."
+    }

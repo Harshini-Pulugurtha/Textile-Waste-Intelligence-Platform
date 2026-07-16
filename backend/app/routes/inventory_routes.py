@@ -29,7 +29,7 @@ def create_inventory(
     db: Session = Depends(get_db),
     current_user: User = Depends(
         RoleChecker([
-            "Administrator",
+            "admin",
             "manufacturer"
         ])
     )
@@ -134,7 +134,7 @@ def update_inventory(
     db: Session = Depends(get_db),
     current_user: User = Depends(
         RoleChecker([
-            "Administrator",
+            "admin",
             "manufacturer",
             "recycling_operator"
         ])
@@ -200,7 +200,9 @@ def delete_inventory(
     inventory_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(
-        RoleChecker(["Administrator"])
+        RoleChecker([
+            "admin"
+        ])
     )
 ):
 

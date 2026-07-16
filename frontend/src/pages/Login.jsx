@@ -24,7 +24,7 @@ function Login() {
         email: "",
         password: ""
     });
-
+    const [error, setError] = useState("");
     const handleChange = (e) => {
 
         setFormData({
@@ -40,42 +40,44 @@ function Login() {
 
     const handleSubmit = async (e) => {
 
-        e.preventDefault();
+            e.preventDefault();
 
-        try {
+            setError("");
 
-            const response = await API.post(
-                "/auth/login",
-                formData
-            );
+            try {
 
-            localStorage.setItem(
-                "token",
-                response.data.access_token
-            );
+                const response = await API.post(
+                    "/auth/login",
+                    formData
+                );
 
-            localStorage.setItem(
-                "user",
-                JSON.stringify(response.data.user)
-            );
+                localStorage.setItem(
+                    "token",
+                    response.data.access_token
+                );
 
-            navigate("/dashboard");
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(response.data.user)
+                );
 
-        } catch (error) {
+                navigate("/dashboard");
 
-            if (error.response) {
+            } catch (err) {
 
-                alert(error.response.data.detail);
+                if (err.response) {
 
-            } else {
+                    setError(err.response.data.detail);
 
-                alert("Login Failed");
+                } else {
+
+                    setError("Login Failed.");
+
+                }
 
             }
 
-        }
-
-    };
+        };
 
     // ===============================
     // Google Login
@@ -241,6 +243,15 @@ function Login() {
                         )}
 
                         <form onSubmit={handleSubmit}>
+                            {error && (
+
+                                <div className="login-error">
+
+                                    {error}
+
+                                </div>
+
+                            )}
 
                             <input
 
@@ -273,6 +284,7 @@ function Login() {
                                 required
 
                             />
+                            
 
                             <button
                                 type="submit"
@@ -282,6 +294,29 @@ function Login() {
                                 Login
 
                             </button>
+
+                            <div
+                                style={{
+                                    textAlign: "right",
+                                    marginTop: "10px",
+                                    marginBottom: "20px"
+                                }}
+                            >
+
+                                <Link
+                                    to="/forgot-password"
+                                    style={{
+                                        color: "#1565C0",
+                                        textDecoration: "none",
+                                        fontSize: "14px"
+                                    }}
+                                >
+
+                                    Forgot Password?
+
+                                </Link>
+
+                            </div>
 
                         </form>
 

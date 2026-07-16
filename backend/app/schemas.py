@@ -117,3 +117,15 @@ class TextileInventoryResponse(BaseModel):
 class ProfileUpdate(BaseModel):
     full_name: str
     organization: str
+
+# ==========================
+# Forgot Password
+# ==========================
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    new_password: str

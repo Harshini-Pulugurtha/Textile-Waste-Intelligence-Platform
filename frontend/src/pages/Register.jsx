@@ -204,43 +204,26 @@ function Register() {
                             />
 
                             <select
-
                                 name="role"
-
                                 onChange={handleChange}
-
                                 required
-
                             >
-
-                                <option value="">
-
-                                    Select Role
-
-                                </option>
+                                <option value="">Select Role</option>
 
                                 <option value="recycling_operator">
-
                                     Recycling Facility Operator
-
                                 </option>
 
                                 <option value="manufacturer">
-
                                     Textile Manufacturer
-
                                 </option>
 
                                 <option value="sustainability_manager">
-
                                     Sustainability Manager
-
                                 </option>
 
                                 <option value="admin">
-
                                     Administrator
-
                                 </option>
 
                             </select>

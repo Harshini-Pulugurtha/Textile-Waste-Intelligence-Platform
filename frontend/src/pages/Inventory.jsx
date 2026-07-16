@@ -383,7 +383,7 @@ function Inventory() {
 
                             </button>
 
-                            {(user.role === "Administrator" ||
+                            {(user.role === "admin" ||
 
                                 user.role === "manufacturer") && (
 
@@ -595,7 +595,7 @@ function Inventory() {
 
                                 <td>
 
-                                    {(user.role === "Administrator" ||
+                                    {(user.role === "admin" ||
 
                                         user.role === "manufacturer" ||
 
@@ -614,7 +614,7 @@ function Inventory() {
 
                                     )}
 
-                                    {user.role === "Administrator" && (
+                                    {user.role === "admin" && (
 
                                         <button
                                             className="delete-btn"
