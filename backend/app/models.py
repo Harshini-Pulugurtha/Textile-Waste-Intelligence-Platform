@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, Date, DateTime, ForeignKey
 from sqlalchemy.sql import func
+from datetime import datetime
+
 
 from .database import Base
 
@@ -90,4 +92,45 @@ class TextileInventory(Base):
     created_at = Column(
         DateTime(timezone=True),
         server_default=func.now()
+    )
+
+class TextileAnalysis(Base):
+    __tablename__ = "textile_analysis"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    image_name = Column(String, nullable=False)
+    # AI Analysis
+    color = Column(String)
+
+    texture = Column(String)
+
+    pattern = Column(String)
+
+    condition = Column(String)
+
+    damage = Column(String)
+
+    contamination = Column(String)
+
+    material = Column(String)
+
+    quality = Column(String)
+
+    # Waste Intelligence
+    waste_category = Column(String)
+
+    recyclability = Column(String)
+
+    recommendation = Column(String)
+
+    textile_score = Column(Integer)
+
+    grade = Column(String)
+
+
+
+    created_at = Column(
+        DateTime,
+        default=datetime.utcnow
     )

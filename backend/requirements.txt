@@ -26,3 +26,13 @@ google-auth==2.40.3
 google-auth-oauthlib
 
 aiosmtplib
+tensorflow 
+opencv-python 
+pillow 
+matplotlib 
+numpy
+ultralytics
+
+scikit-learn
+
+mediapipe

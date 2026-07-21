@@ -101,11 +101,26 @@ function Navbar() {
                         </Link>
 
                         <Link
+                            to="/material-recognition"
+                            className={location.pathname === "/material-recognition" ? "active" : ""}
+                        >
+                            AI Analysis
+                        </Link>
+
+                        <Link
+                            to="/analysis-history"
+                            className={location.pathname === "/analysis-history" ? "active" : ""}
+                        >
+                            History
+                        </Link>
+
+                        <Link
                             to="/profile"
                             className={location.pathname === "/profile" ? "active" : ""}
                         >
                             Profile
                         </Link>
+
 
                     </div>
 

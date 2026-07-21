@@ -1,1 +1,38 @@
+# Dataset
+dataset/
+datasets/
+data/
+
+# Uploaded Images
+uploads/
+predictions/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment
 .env
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# Build
+dist/
+build/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

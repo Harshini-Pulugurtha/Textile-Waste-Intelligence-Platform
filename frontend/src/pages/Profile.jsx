@@ -117,16 +117,10 @@ function Profile() {
 
                     <div>
 
-                        <h1>
-
-                            User Profile
-
-                        </h1>
+                        <h1>👤 My Profile</h1>
 
                         <p>
-
-                            View and manage your account information.
-
+                            Manage your account information and account settings.
                         </p>
 
                     </div>
@@ -150,6 +144,24 @@ function Profile() {
                 <div className="profile-card">
 
                     <div className="profile-top">
+                        <div className="profile-stats">
+
+                            <div className="stat-box">
+                                <h3>{user?.role}</h3>
+                                <span>Role</span>
+                            </div>
+
+                            <div className="stat-box">
+                                <h3>Active</h3>
+                                <span>Status</span>
+                            </div>
+
+                            <div className="stat-box">
+                                <h3>100%</h3>
+                                <span>Profile Complete</span>
+                            </div>
+
+                        </div>
 
                         <div className="profile-avatar">
 
@@ -257,9 +269,25 @@ function Profile() {
 
                         <h2>
 
-                            Update Profile
+                            ✏️ Edit Profile Information
 
                         </h2>
+                        <div className="completion-card">
+
+                            <h3>Profile Completion</h3>
+
+                            <div className="progress">
+
+                                <div
+                                    className="progress-fill"
+                                    style={{width:"100%"}}
+                                ></div>
+
+                            </div>
+
+                            <span>100% Complete</span>
+
+                        </div>
 
                         <form onSubmit={handleUpdate}>
                                                         <div className="form-grid">

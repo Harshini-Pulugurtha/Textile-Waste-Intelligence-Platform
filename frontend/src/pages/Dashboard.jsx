@@ -7,12 +7,35 @@ import {
     FaLayerGroup,
     FaCalendarDay,
     FaUserCircle,
-    FaArrowRight
+    FaArrowRight,
+    FaRobot,
+    FaBullseye,
+    FaRecycle,
+    FaTshirt
 } from "react-icons/fa";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { getDashboardStats } from "../services/dashboardService";
+import {
+    getDashboardStats,
+    getAnalysisStats,
+    getWasteDistribution
+} from "../services/dashboardService";
+
+import { Pie } from "react-chartjs-2";
+
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    Legend
+} from "chart.js";
+
+ChartJS.register(
+    ArcElement,
+    Tooltip,
+    Legend
+);
 
 import "./Dashboard.css";
 
@@ -75,6 +98,14 @@ function Dashboard() {
     const user = getStoredUser();
     const [stats, setStats] = useState(initialStats);
 
+    const [analysisStats, setAnalysisStats] = useState({
+    total_analyses: 0,
+    reusable: 0,
+    recyclable: 0,
+    disposal: 0
+});
+    const [wasteData, setWasteData] = useState([]);
+
     const today = new Date().toLocaleDateString("en-US", {
         weekday: "long",
         year: "numeric",
@@ -89,6 +120,9 @@ function Dashboard() {
             try {
                 const response = await getDashboardStats();
 
+                const analysisResponse = await getAnalysisStats();
+                const wasteResponse = await getWasteDistribution();
+
                 if (!isMounted) {
                     return;
                 }
@@ -100,6 +134,8 @@ function Dashboard() {
                         ? response.data.recent_inventory
                         : []
                 });
+                setAnalysisStats(analysisResponse.data);
+                setWasteData(wasteResponse.data);
             } catch (error) {
                 console.error(error);
 
@@ -110,6 +146,7 @@ function Dashboard() {
         };
 
         loadDashboard();
+        
 
         return () => {
             isMounted = false;
@@ -126,20 +163,64 @@ function Dashboard() {
         ? stats.recent_inventory
         : [];
 
+const wasteChartData = {
+    labels: wasteData.map(item => item.category),
+    datasets: [
+        {
+            data: wasteData.map(item => item.count),
+            backgroundColor: [
+                "#10B981",
+                "#F59E0B",
+                "#EF4444"
+            ]
+        }
+    ]
+};
+
     return (
         <>
             <Navbar />
 
             <div className="dashboard-container">
                 <div className="dashboard-card">
-                    <div>
-                        <h1>Welcome, {user?.full_name || "User"}</h1>
-                        <p>Textile Waste Intelligence Platform Dashboard</p>
-                        <span>{user?.role || "No role assigned"}</span>
+
+                <div className="welcome-section">
+
+                    <h1>
+                        👋 Welcome back, {user?.full_name || "User"}
+                    </h1>
+
+                    <h3>
+                        AI Textile Waste Intelligence Platform
+                    </h3>
+
+                    <p>
+                        Monitor textile inventory, AI analysis,
+                        sustainability metrics and recycling insights.
+                    </p>
+                    <div className="dashboard-status">
+
+                        <span>🤖 AI Ready</span>
+
+                        <span>♻ Sustainability Enabled</span>
+
+                        <span>📦 Inventory Connected</span>
+
                     </div>
 
-                    <div>{today}</div>
                 </div>
+
+                <div className="date-section">
+
+                    <h4>📅 {today}</h4>
+
+                    <span className="role-badge">
+                        {user?.role}
+                    </span>
+
+                </div>
+
+            </div>
 
                 <div className="stats-grid">
                     {statCards.map((card) => {
@@ -150,10 +231,42 @@ function Dashboard() {
                                 <Icon className="stat-icon" />
                                 <h3>{card.title}</h3>
                                 <h2>{card.formatValue(stats)}</h2>
+                                <p className="stat-status">
+                                    ● Live Data
+                                </p>
                             </div>
                         );
                     })}
                 </div>
+                <div className="stats-grid">
+
+    <div className="stat-card analysis">
+        <FaRobot className="stat-icon" />
+        <h3>Total Analyses</h3>
+        <h2>{analysisStats.total_analyses}</h2>
+    </div>
+
+    <div className="stat-card reusable">
+        <FaRecycle className="stat-icon" />
+        <h3>Reusable Items</h3>
+        <h2>{analysisStats.reusable}</h2>
+    </div>
+
+    
+</div>
+                    <div className="section-title">
+                        <h2>📊 Analytics Dashboard</h2>
+                        <p>Visual insights from AI analysis and textile inventory.</p>
+                    </div>
+                    <div className="chart-grid">
+
+                        <div className="chart-card">
+                            <h2>Waste Distribution</h2>
+
+                            <Pie data={wasteChartData} />
+                        </div>
+
+                    </div>
 
                 <div className="profile-card">
                     <h2>
@@ -218,6 +331,13 @@ function Dashboard() {
                 <div className="button-group">
                     <button className="profile-btn" onClick={() => navigate("/profile")}>
                         View Profile
+                        <FaArrowRight />
+                    </button>
+                    <button
+                        className="analysis-btn"
+                        onClick={() => navigate("/material-recognition")}
+                    >
+                        AI Analysis
                         <FaArrowRight />
                     </button>
 

@@ -27,4 +27,23 @@ build/
 Thumbs.db
 
 # Datasets
-datasets/
+# Datas
+backend/damage_detection/
+backend/damage_detection_yolo/
+backend/datasets/
+backend/organized_dataset/
+backend/organized_dataset_test/
+backend/training/
+backend/test_segmentation/
+
+# YOLO Pretrained Models
+backend/yolov8n.pt
+backend/yolov8n-seg.pt
+
+# Uploaded Images
+backend/app/static/uploads/
+
+# ML Models (if large)
+backend/app/ml/
+
+backend/test_segmentation.py

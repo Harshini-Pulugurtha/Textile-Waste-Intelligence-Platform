@@ -577,3 +577,127 @@ font-size:24px;
 }
 
 }
+.profile-stats{
+
+    display:flex;
+
+    gap:20px;
+
+    margin:30px 0;
+
+    flex-wrap:wrap;
+
+}
+
+.stat-box{
+
+    flex:1;
+
+    min-width:150px;
+
+    background:#f8fbff;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    text-align:center;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.08);
+
+}
+
+.stat-box h3{
+
+    color:#2563eb;
+
+    font-size:18px;
+
+}
+
+.stat-box span{
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.profile-avatar{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+
+    color:white;
+
+    font-size:36px;
+
+    font-weight:700;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:0 8px 20px rgba(37,99,235,.35);
+
+}
+.info-box{
+
+    transition:.3s;
+
+}
+
+.info-box:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+}
+.profile-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.profile-buttons button{
+
+    flex:1;
+
+}
+.completion-card{
+
+    margin-bottom:30px;
+
+}
+
+.progress{
+
+    height:10px;
+
+    background:#e5e7eb;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin:10px 0;
+
+}
+
+.progress-fill{
+
+    height:100%;
+
+    background:#22c55e;
+
+}

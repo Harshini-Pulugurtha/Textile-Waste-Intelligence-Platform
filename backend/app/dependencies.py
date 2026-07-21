@@ -35,6 +35,32 @@ def get_current_user(
         detail="Could not validate credentials"
     )
 
+    # try:
+
+    #     payload = jwt.decode(
+    #         token,
+    #         SECRET_KEY,
+    #         algorithms=[ALGORITHM]
+    #     )
+
+    #     email = payload.get("sub")
+
+    #     if email is None:
+    #         raise credentials_exception
+
+    # except JWTError:
+    #     raise credentials_exception
+
+    # user = (
+    #     db.query(User)
+    #     .filter(User.email == email)
+    #     .first()
+    # )
+
+    # if user is None:
+    #     raise credentials_exception
+
+    # return user
     try:
 
         payload = jwt.decode(
@@ -45,10 +71,13 @@ def get_current_user(
 
         email = payload.get("sub")
 
+        print("Decoded email:", email)
+
         if email is None:
             raise credentials_exception
 
-    except JWTError:
+    except JWTError as e:
+        print("JWT Error:", e)
         raise credentials_exception
 
     user = (
@@ -57,11 +86,12 @@ def get_current_user(
         .first()
     )
 
+    print("User found:", user)
+
     if user is None:
         raise credentials_exception
 
     return user
-
 
 # ===========================
 # Role Checker

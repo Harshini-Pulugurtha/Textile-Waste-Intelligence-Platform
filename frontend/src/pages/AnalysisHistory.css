@@ -1,0 +1,445 @@
+.history-container{
+    max-width:1300px;
+    margin:auto;
+    padding:40px 20px;
+    min-height:100vh;
+    background:#f5f8fc;
+}
+
+.history-container h1{
+    text-align:center;
+    color:#1565C0;
+    margin-bottom:30px;
+}
+
+.loading{
+    text-align:center;
+    font-size:18px;
+    color:#666;
+}
+
+.history-table{
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+}
+
+.history-table table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.history-table thead{
+    background:linear-gradient(90deg,#2563eb,#1d4ed8);
+    color:white;
+}
+
+.history-table th{
+    padding:16px;
+}
+
+.history-table td{
+    padding:16px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+.history-table tbody tr:hover{
+    background:#eff6ff;
+    transition:0.3s;
+}
+
+@media(max-width:900px){
+
+.history-table{
+    overflow-x:auto;
+}
+
+table{
+    min-width:900px;
+}
+
+}
+.search-container{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:20px;
+}
+
+.search-input{
+    width:320px;
+    padding:12px 18px;
+    border:2px solid #1565C0;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+    transition:.3s;
+}
+
+.search-input:focus{
+    box-shadow:0 0 8px rgba(21,101,192,.3);
+}
+.search-container{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.filter-select{
+    padding:12px 16px;
+    border:2px solid #1565C0;
+    border-radius:10px;
+    font-size:15px;
+    cursor:pointer;
+    background:white;
+}
+.export-container{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:20px;
+}
+
+.export-btn{
+    background:#16A34A;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.export-btn:hover{
+    background:#15803D;
+    transform:translateY(-2px);
+}
+.export-container{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.pdf-btn{
+    background:#DC2626;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.pdf-btn:hover{
+    background:#B91C1C;
+}
+.delete-btn{
+    background:#6B7280;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.delete-btn:hover{
+    background:#DC2626;
+    transform:translateY(-2px);
+}
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.delete-modal{
+    width:380px;
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.delete-modal h2{
+    color:#DC2626;
+    margin-bottom:10px;
+}
+
+.delete-modal p{
+    color:#555;
+    margin-bottom:25px;
+}
+
+.modal-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.cancel-btn{
+    background:#E5E7EB;
+    color:#333;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.cancel-btn:hover{
+    background:#D1D5DB;
+}
+
+.confirm-delete-btn{
+    background:#DC2626;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.confirm-delete-btn:hover{
+    background:#B91C1C;
+}
+.history-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.history-header h1{
+
+    color:#1e40af;
+
+    font-size:34px;
+
+}
+
+.history-header p{
+
+    color:#64748b;
+
+    margin-top:8px;
+
+}
+
+.history-count{
+
+    width:100px;
+
+    height:100px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:30px;
+
+    font-weight:700;
+
+}
+
+.history-count span{
+
+    font-size:14px;
+
+}
+/* ==========================
+   Toolbar
+========================== */
+
+.history-toolbar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+
+}
+
+.search-input{
+
+    flex:1;
+
+    min-width:280px;
+
+}
+
+.filter-select{
+
+    width:180px;
+
+}
+
+.pdf-btn,
+.export-btn{
+
+    padding:12px 18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+/* ==========================
+   Status Badges
+========================== */
+
+.badge{
+    display:inline-block;
+    padding:7px 16px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    color:#fff;
+    text-align:center;
+    min-width:95px;
+    text-transform:capitalize;
+}
+
+/* Condition */
+
+.excellent{
+    background:#22c55e;
+}
+
+.good{
+    background:#3b82f6;
+}
+
+.fair{
+    background:#f59e0b;
+}
+
+.poor{
+    background:#ef4444;
+}
+
+/* Damage */
+
+.normal{
+    background:#16a34a;
+}
+
+.minor{
+    background:#f59e0b;
+}
+
+.major{
+    background:#dc2626;
+}
+
+.defect{
+    background:#dc2626;
+}
+
+.damaged{
+    background:#ea580c;
+}
+
+/* Waste Category */
+
+.reusable{
+    background:#16a34a;
+}
+
+.recyclable{
+    background:#0ea5e9;
+}
+
+.disposal{
+    background:#dc2626;
+}
+
+.upcyclable{
+    background:#8b5cf6;
+}
+
+/* Recyclability */
+
+.reusable{
+    background:#16a34a;
+}
+
+.recyclable{
+    background:#2563eb;
+}
+
+.upcyclable{
+    background:#8b5cf6;
+}
+
+.non-recyclable{
+    background:#dc2626;
+}
+/* Recyclability Levels */
+
+.low{
+    background:#dc2626;
+}
+
+.medium{
+    background:#f59e0b;
+}
+
+.high{
+    background:#16a34a;
+}
+.needs-inspection{
+    background:#f59e0b;
+}
+.slightly-dirty{
+    background:#f59e0b;
+}
+
+.heavily-dirty{
+    background:#dc2626;
+}
+
+.dusty{
+    background:#f59e0b;
+}
+
+.clean{
+    background:#16a34a;
+}

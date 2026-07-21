@@ -2,24 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from dotenv import load_dotenv
-
-from app.routes import (
-    auth_routes,
-    rbac_routes,
-    profile_routes
-)
+from app.routes import history_routes
 
 from app.routes import (
     auth_routes,
     rbac_routes,
     profile_routes,
     inventory_routes,
-    dashboard_routes
+    dashboard_routes,
+    classification_routes
 )
 
 from app.database import Base, engine
 from app import models
-from app.routes import auth_routes
+
 
 # Load environment variables
 load_dotenv()
@@ -71,6 +67,17 @@ app.include_router(
     prefix="/dashboard",
     tags=["Dashboard"]
 )
+
+app.include_router(
+
+    classification_routes.router,
+
+    prefix="/classification",
+
+    tags=["Material Recognition"]
+
+)
+app.include_router(history_routes.router)
 
 @app.get("/")
 def root():

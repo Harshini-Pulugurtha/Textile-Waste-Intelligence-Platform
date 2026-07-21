@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,6 +11,9 @@ import CompleteProfile from "./pages/CompleteProfile";
 
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import MaterialRecognition from "./pages/MaterialRecognition";
+import AnalysisHistory from "./pages/AnalysisHistory";
+
 
 function App() {
 
@@ -46,6 +50,10 @@ function App() {
                 path="/inventory"
                 element={<Inventory />}
             />
+            <Route
+                path="/material-recognition"
+                element={<MaterialRecognition />}
+            />
 
             <Route
                 path="/complete-profile"
@@ -65,6 +73,10 @@ function App() {
             <Route
                 path="*"
                 element={<Navigate to="/" />}
+            />
+            <Route
+                path="/analysis-history"
+                element={<AnalysisHistory />}
             />
 
         </Routes>
